@@ -94,7 +94,7 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
                 robot.backRightDrive.setPower(r);
             }
             else {
-                // Drive linearly if no rotation is occuring
+                // Drive linearly if no rotation is occurring
                 robot.frontLeftDrive.setPower(x);
                 robot.frontRightDrive.setPower(y);
                 robot.backLeftDrive.setPower(y);
