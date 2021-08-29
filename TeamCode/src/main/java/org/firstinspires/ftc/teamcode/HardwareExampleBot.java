@@ -27,11 +27,9 @@ package org.firstinspires.ftc.teamcode;/* Copyright (c) 2017 FIRST. All rights r
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
 import com.qualcomm.hardware.motors.RevRoboticsUltraPlanetaryHdHexMotor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -58,6 +56,10 @@ public class HardwareExampleBot
     public DcMotor  frontRightDrive  = null;
     public DcMotor  backLeftDrive    = null;
     public DcMotor  backRightDrive   = null;
+    public DcMotor  intake           = null;
+    public DistanceSensor dist       = null;
+    public DcMotor  con1             = null;
+    public DcMotor  con2             = null;
 
 
     //public Servo    leftClaw    = null;
@@ -70,10 +72,7 @@ public class HardwareExampleBot
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
-    private String FLD;
-    private String FRD;
-    private String BLD;
-    private String BRD;
+    private String FLD,FRD,BLD,BRD,INT,DIS,conA,conB;
 
     /* Constructor */
     public HardwareExampleBot(){
@@ -81,6 +80,10 @@ public class HardwareExampleBot
         FRD = "frd";
         BLD = "bld";
         BRD = "brd";
+        INT = "int";
+        DIS = "dis";
+        conA= "cn1";
+        conB= "cn2";
     }
 
     /* Initialize standard Hardware interfaces for remote control*/
@@ -93,18 +96,28 @@ public class HardwareExampleBot
         frontRightDrive = hwMap.get(DcMotor.class, FRD);
         backLeftDrive   = hwMap.get(DcMotor.class, BLD);
         backRightDrive  = hwMap.get(DcMotor.class, BRD);
+        intake          = hwMap.get(DcMotor.class, INT);
+        dist            = hwMap.get(DistanceSensor.class, DIS);
+        con1            = hwMap.get(DcMotor.class, conA);
+        con2            = hwMap.get(DcMotor.class, conB);
 
         // Set motor directions THIS IS A MECANUM DRIVE
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        con1.setDirection(DcMotorSimple.Direction.FORWARD);
+        con2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set motor types (Optional)
         frontLeftDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         frontRightDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         backLeftDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         backRightDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
+        intake.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
+        con1.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
+        con2.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
 
 
         // Set all motors to zero power
@@ -112,12 +125,18 @@ public class HardwareExampleBot
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+        intake.setPower(0);
+        con1.setPower(0);
+        con2.setPower(0);
 
-        //Automatic Breaking
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //Disables harsh stops
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        con1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        con2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to run without encoders.
         // Use encoders for motors that require precision/automatic control
@@ -125,6 +144,9 @@ public class HardwareExampleBot
         frontRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");
@@ -143,18 +165,27 @@ public class HardwareExampleBot
         frontRightDrive = hwMap.get(DcMotor.class, FRD);
         backLeftDrive   = hwMap.get(DcMotor.class, BLD);
         backRightDrive  = hwMap.get(DcMotor.class, BRD);
+        intake          = hwMap.get(DcMotor.class, INT);
+        con1            = hwMap.get(DcMotor.class, conA);
+        con2            = hwMap.get(DcMotor.class, conB);
 
         // Set motor directions THIS IS A MECANUM DRIVE
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        con1.setDirection(DcMotorSimple.Direction.FORWARD);
+        con2.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set motor types (Optional)
         frontLeftDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         frontRightDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         backLeftDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         backRightDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
+        intake.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
+        con1.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
+        con2.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
 
 
         // Set all motors to zero power
@@ -162,12 +193,18 @@ public class HardwareExampleBot
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+        intake.setPower(0);
+        con1.setPower(0);
+        con2.setPower(0);
 
         //Automatic Breaking
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        con1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        con2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to run without encoders.
         // Use encoders for motors that require precision/automatic control
@@ -175,6 +212,9 @@ public class HardwareExampleBot
         frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");

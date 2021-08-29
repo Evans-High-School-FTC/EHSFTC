@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -59,6 +60,8 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
     @Override
     public void runOpMode() {
         double x,y,r;
+        boolean intake;
+        boolean chng = false;
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -81,9 +84,35 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
             y = -gamepad1.left_stick_y;
             x =  gamepad1.left_stick_x;
             r =  gamepad1.right_stick_x;
+            intake = gamepad1.left_bumper;
 
             y = x*(Math.sin(-Math.PI/4)) + y*(Math.cos(-Math.PI/4));
             x = x*(Math.cos(-Math.PI/4)) - y*(Math.sin(-Math.PI/4));
+
+            //Checks if disk is in shooter using distance sensor
+            if(robot.dist.getDistance(DistanceUnit.CM) > 5) {
+                //If not advances conveyor
+                robot.con1.setPower(1);
+                robot.con2.setPower(1);
+            }
+            else {
+                //otherwise stops conveyor
+                robot.con1.setPower(0);
+                robot.con2.setPower(0);
+            }
+
+            if(intake && !chng) {
+                if(robot.intake.getPower() == 0) {
+                    robot.intake.setPower(1);
+                }
+                else {
+                    robot.intake.setPower(0);
+                }
+                chng = true;
+            }
+            else if(!intake) {
+                chng = false;
+            }
 
 
             if(Math.abs(r) > .1) {
