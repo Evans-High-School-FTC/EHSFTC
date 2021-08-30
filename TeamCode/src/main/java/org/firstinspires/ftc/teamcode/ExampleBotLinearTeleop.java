@@ -62,6 +62,7 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
         double x,y,r;
         boolean intake;
         boolean chng = false;
+        float shooter;
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -69,7 +70,7 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
         robot.initForTele(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Starting");    //
+        telemetry.addData("Status", "Starting");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -85,9 +86,18 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
             x =  gamepad1.left_stick_x;
             r =  gamepad1.right_stick_x;
             intake = gamepad1.left_bumper;
+            shooter = gamepad1.right_trigger;
 
             y = x*(Math.sin(-Math.PI/4)) + y*(Math.cos(-Math.PI/4));
             x = x*(Math.cos(-Math.PI/4)) - y*(Math.sin(-Math.PI/4));
+
+            //Starts moves shooter if trigger is pressed
+            if(shooter > .1) {
+                robot.shooter.setPower(1);
+            }
+            else {
+                robot.shooter.setPower(0);
+            }
 
             //Checks if disk is in shooter using distance sensor
             if(robot.dist.getDistance(DistanceUnit.CM) > 5) {

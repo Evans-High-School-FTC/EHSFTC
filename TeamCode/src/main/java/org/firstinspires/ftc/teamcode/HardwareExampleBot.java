@@ -60,7 +60,7 @@ public class HardwareExampleBot
     public DistanceSensor dist       = null;
     public DcMotor  con1             = null;
     public DcMotor  con2             = null;
-
+    public DcMotor  shooter          = null;
 
     //public Servo    leftClaw    = null;
     //public Servo    rightClaw   = null;
@@ -72,7 +72,7 @@ public class HardwareExampleBot
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
-    private String FLD,FRD,BLD,BRD,INT,DIS,conA,conB;
+    private String FLD,FRD,BLD,BRD,INT,DIS,conA,conB,SHT;
 
     /* Constructor */
     public HardwareExampleBot(){
@@ -84,6 +84,7 @@ public class HardwareExampleBot
         DIS = "dis";
         conA= "cn1";
         conB= "cn2";
+        SHT = "sht";
     }
 
     /* Initialize standard Hardware interfaces for remote control*/
@@ -100,6 +101,7 @@ public class HardwareExampleBot
         dist            = hwMap.get(DistanceSensor.class, DIS);
         con1            = hwMap.get(DcMotor.class, conA);
         con2            = hwMap.get(DcMotor.class, conB);
+        shooter         = hwMap.get(DcMotor.class, SHT);
 
         // Set motor directions THIS IS A MECANUM DRIVE
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
@@ -109,6 +111,7 @@ public class HardwareExampleBot
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
         con1.setDirection(DcMotorSimple.Direction.FORWARD);
         con2.setDirection(DcMotorSimple.Direction.FORWARD);
+        shooter.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set motor types (Optional)
         frontLeftDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
@@ -118,6 +121,7 @@ public class HardwareExampleBot
         intake.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         con1.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
         con2.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
+        shooter.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
 
 
         // Set all motors to zero power
@@ -128,6 +132,7 @@ public class HardwareExampleBot
         intake.setPower(0);
         con1.setPower(0);
         con2.setPower(0);
+        shooter.setPower(0);
 
         //Disables harsh stops
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -137,6 +142,7 @@ public class HardwareExampleBot
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         con1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         con2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to run without encoders.
         // Use encoders for motors that require precision/automatic control
@@ -147,6 +153,7 @@ public class HardwareExampleBot
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");
@@ -168,6 +175,7 @@ public class HardwareExampleBot
         intake          = hwMap.get(DcMotor.class, INT);
         con1            = hwMap.get(DcMotor.class, conA);
         con2            = hwMap.get(DcMotor.class, conB);
+        shooter         = hwMap.get(DcMotor.class, SHT);
 
         // Set motor directions THIS IS A MECANUM DRIVE
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
@@ -177,6 +185,7 @@ public class HardwareExampleBot
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
         con1.setDirection(DcMotorSimple.Direction.FORWARD);
         con2.setDirection(DcMotorSimple.Direction.FORWARD);
+        shooter.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set motor types (Optional)
         frontLeftDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
@@ -186,7 +195,7 @@ public class HardwareExampleBot
         intake.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         con1.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
         con2.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
-
+        shooter.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
 
         // Set all motors to zero power
         frontLeftDrive.setPower(0);
@@ -196,6 +205,7 @@ public class HardwareExampleBot
         intake.setPower(0);
         con1.setPower(0);
         con2.setPower(0);
+        shooter.setPower(0);
 
         //Automatic Breaking
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -205,6 +215,7 @@ public class HardwareExampleBot
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         con1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         con2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to run without encoders.
         // Use encoders for motors that require precision/automatic control
@@ -215,6 +226,7 @@ public class HardwareExampleBot
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");
