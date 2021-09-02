@@ -77,7 +77,7 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
             y = x*(Math.sin(-Math.PI/4)) + y*(Math.cos(-Math.PI/4));
             x = x*(Math.cos(-Math.PI/4)) - y*(Math.sin(-Math.PI/4));
 
-            //Starts moves shooter if trigger is pressed
+            //Starts to move shooter if trigger is pressed
             if(shooter > .1) {
                 robot.shooter.setPower(1);
             }
@@ -89,12 +89,10 @@ public class ExampleBotLinearTeleop extends LinearOpMode {
             if(robot.dist.getDistance(DistanceUnit.CM) > 5) {
                 //If not advances conveyor
                 robot.con1.setPower(1);
-                robot.con2.setPower(1);
             }
             else {
-                //otherwise stops conveyor
+                //Otherwise, stops conveyor
                 robot.con1.setPower(0);
-                robot.con2.setPower(0);
             }
 
             if(intake && !chng) {

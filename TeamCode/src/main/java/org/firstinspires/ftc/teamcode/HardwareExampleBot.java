@@ -48,7 +48,6 @@ public class HardwareExampleBot
     public DcMotor  intake           = null;
     public DistanceSensor dist       = null;
     public DcMotor  con1             = null;
-    public DcMotor  con2             = null;
     public DcMotor  shooter          = null;
 
     //public Servo    leftClaw    = null;
@@ -61,7 +60,7 @@ public class HardwareExampleBot
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
-    private String FLD,FRD,BLD,BRD,INT,DIS,conA,conB,SHT;
+    private String FLD,FRD,BLD,BRD,INT,DIS,conA,SHT;
 
     /* Constructor */
     public HardwareExampleBot(){
@@ -72,7 +71,6 @@ public class HardwareExampleBot
         INT = "int";
         DIS = "dis";
         conA= "cn1";
-        conB= "cn2";
         SHT = "sht";
     }
 
@@ -89,7 +87,6 @@ public class HardwareExampleBot
         intake          = hwMap.get(DcMotor.class, INT);
         dist            = hwMap.get(DistanceSensor.class, DIS);
         con1            = hwMap.get(DcMotor.class, conA);
-        con2            = hwMap.get(DcMotor.class, conB);
         shooter         = hwMap.get(DcMotor.class, SHT);
 
         // Set motor directions THIS IS A MECANUM DRIVE
@@ -99,7 +96,6 @@ public class HardwareExampleBot
         backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
         con1.setDirection(DcMotorSimple.Direction.FORWARD);
-        con2.setDirection(DcMotorSimple.Direction.FORWARD);
         shooter.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set motor types (Optional)
@@ -109,7 +105,6 @@ public class HardwareExampleBot
         backRightDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         intake.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         con1.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
-        con2.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
         shooter.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
 
 
@@ -120,7 +115,6 @@ public class HardwareExampleBot
         backRightDrive.setPower(0);
         intake.setPower(0);
         con1.setPower(0);
-        con2.setPower(0);
         shooter.setPower(0);
 
         //Disables harsh stops
@@ -130,7 +124,6 @@ public class HardwareExampleBot
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         con1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        con2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to run without encoders.
@@ -140,7 +133,6 @@ public class HardwareExampleBot
         backRightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -163,7 +155,6 @@ public class HardwareExampleBot
         backRightDrive  = hwMap.get(DcMotor.class, BRD);
         intake          = hwMap.get(DcMotor.class, INT);
         con1            = hwMap.get(DcMotor.class, conA);
-        con2            = hwMap.get(DcMotor.class, conB);
         shooter         = hwMap.get(DcMotor.class, SHT);
 
         // Set motor directions THIS IS A MECANUM DRIVE
@@ -173,7 +164,6 @@ public class HardwareExampleBot
         backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
         con1.setDirection(DcMotorSimple.Direction.FORWARD);
-        con2.setDirection(DcMotorSimple.Direction.FORWARD);
         shooter.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set motor types (Optional)
@@ -183,7 +173,6 @@ public class HardwareExampleBot
         backRightDrive.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         intake.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
         con1.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
-        con2.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsCoreHexMotor.class));
         shooter.setMotorType(MotorConfigurationType.getMotorType(RevRoboticsUltraPlanetaryHdHexMotor.class));
 
         // Set all motors to zero power
@@ -193,7 +182,6 @@ public class HardwareExampleBot
         backRightDrive.setPower(0);
         intake.setPower(0);
         con1.setPower(0);
-        con2.setPower(0);
         shooter.setPower(0);
 
         //Automatic Breaking
@@ -203,7 +191,6 @@ public class HardwareExampleBot
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         con1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        con2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to run without encoders.
@@ -213,7 +200,6 @@ public class HardwareExampleBot
         backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         con1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
