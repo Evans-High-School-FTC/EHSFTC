@@ -50,7 +50,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @TeleOp(name="BetaBot: Teleop POV", group="BetaBot")
-public class BettaBotTeleopPOV_Linear extends LinearOpMode {
+public class BetaBotTeleopPOV_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareBetaBot robot           = new HardwareBetaBot();   // Use a Pushbot's hardware
@@ -114,17 +114,14 @@ public class BettaBotTeleopPOV_Linear extends LinearOpMode {
                 robot.Claw.setPower(0);
             }
 
-            // Use gamepad buttons to move arm up (right trigger) and down (left trigger)
-            if (gamepad1.right_trigger > 0 && gamepad1.left_trigger > 0){
-                robot.Arm.setPower(0);
-            }
-            else if (gamepad1.right_trigger > 0){
-                robot.Arm.setPower(gamepad1.right_trigger);
+            // Use gamepad triggers to move arm up (right trigger) and down (left trigger)
+            if (gamepad1.right_trigger > 0){
+                robot.Arm.setPower(1);
                 telemetry.addData("Say", "Raising Arm");
                 telemetry.update();
             }
             else if (gamepad1.left_trigger > 0) {
-                robot.Arm.setPower(gamepad1.left_trigger);
+                robot.Arm.setPower(-1);
                 telemetry.addData("Say", "Lowering Arm");
                 telemetry.update();
             }
