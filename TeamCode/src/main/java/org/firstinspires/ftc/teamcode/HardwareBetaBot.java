@@ -53,21 +53,24 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 public class HardwareBetaBot
 {
+    //It is setting a class for the left,right drive the arm and claw to null
     /* Public OpMode members. */
-    public DcMotor  leftDrive   = null;
-    public DcMotor  rightDrive  = null;
-    public DcMotor  Arm         = null;
-    public DcMotor  Claw        = null;
+    public DcMotor  leftDrive   = null;//sets public class for left drive motor and setting it to null
+    public DcMotor  rightDrive  = null;//sets public class for right drive motor and setting the class to null
+    public DcMotor  Arm         = null;//sets public class for Arm and setting class to null
+    public DcMotor  Claw        = null;//sets public class for Claw and setting class to null
 
+    //Redefines HardwareMap variable and creates new private variable period
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap           =  null;//Redefines HardwareMao variable to hwMap and setting it to null
+    private ElapsedTime period  = new ElapsedTime();//creates new private variable "period" for code ElaspedTime()
 
+    //makes public class HardwareBetaBot
     /* Constructor */
     public HardwareBetaBot(){
 
     }
-
+    //Starts the HardwareMap/interface
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
         // Save reference to Hardware map

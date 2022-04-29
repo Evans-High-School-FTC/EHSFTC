@@ -116,12 +116,12 @@ public class BetaBotTeleopPOV_Linear extends LinearOpMode {
 
             // Use gamepad triggers to move arm up (right trigger) and down (left trigger)
             if (gamepad1.right_trigger > 0){
-                robot.Arm.setPower(1);
+                robot.Arm.setPower(-.1);
                 telemetry.addData("Say", "Raising Arm");
                 telemetry.update();
             }
             else if (gamepad1.left_trigger > 0) {
-                robot.Arm.setPower(-1);
+                robot.Arm.setPower(.1);
                 telemetry.addData("Say", "Lowering Arm");
                 telemetry.update();
             }
