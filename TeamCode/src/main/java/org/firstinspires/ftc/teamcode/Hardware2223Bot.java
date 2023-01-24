@@ -32,7 +32,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Hardware2223Bot
@@ -44,8 +43,8 @@ public class Hardware2223Bot
     public DcMotor  frontLeftDrive  = null;
     public DcMotor  frontRightDrive = null;
     public DcMotor  linearSlide     = null;
-    public Servo    clawLeft        = null;
-    public Servo    clawRight       = null;
+    //public Servo    clawLeft        = null;
+    //public Servo    clawRight       = null;
 
     //Redefines HardwareMap variable and creates new private variable period
     /* local OpMode members. */
@@ -69,8 +68,8 @@ public class Hardware2223Bot
         frontLeftDrive  = hwMap.get(DcMotor.class, "front_left_drive");
         frontRightDrive = hwMap.get(DcMotor.class, "front_right_drive");
         linearSlide     = hwMap.get(DcMotor.class, "arm");
-        clawLeft        = hwMap.get(Servo.class, "claw_left");
-        clawRight       = hwMap.get(Servo.class, "claw_right");
+        //clawLeft        = hwMap.get(Servo.class, "claw_left");
+        //clawRight       = hwMap.get(Servo.class, "claw_right");
         rearLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         rearRightDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
