@@ -75,6 +75,7 @@ public class Hardware2223Bot
         rearRightDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        linearSlide.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set all motors to zero power
         rearLeftDrive.setPower(0);

@@ -29,14 +29,10 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
-@TeleOp(name="BetaBot: Teleop POV", group="BetaBot")
+@TeleOp(name="BetaBot23: Teleop POV", group="BetaBot23")
 public class BotTeleopPOV_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -68,7 +64,12 @@ public class BotTeleopPOV_Linear extends LinearOpMode {
     }
 
     private void linearSlide() {
-        robot.linearSlide.setPower(gamepad1.left_trigger);
+        if(gamepad1.right_trigger != 0) {
+            robot.linearSlide.setPower(gamepad1.right_trigger);
+        }
+        else if(gamepad1.left_trigger != 0) {
+            robot.linearSlide.setPower(-gamepad1.left_trigger);
+        }
     }
 
     /*private void intake() {
