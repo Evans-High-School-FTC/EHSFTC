@@ -31,13 +31,14 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="BetaBot23: Teleop POV", group="BetaBot23")
 public class BotTeleopPOV_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
     Hardware2223Bot robot           = new Hardware2223Bot();
-    private boolean isOpen = false;
+    //private boolean isOpen = false;
 
     @Override
     public void runOpMode() {
@@ -69,6 +70,10 @@ public class BotTeleopPOV_Linear extends LinearOpMode {
         }
         else if(gamepad1.left_trigger != 0) {
             robot.linearSlide.setPower(-gamepad1.left_trigger);
+        }
+        else {
+            robot.linearSlide.setPower(0);
+            robot.linearSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
     }
 
