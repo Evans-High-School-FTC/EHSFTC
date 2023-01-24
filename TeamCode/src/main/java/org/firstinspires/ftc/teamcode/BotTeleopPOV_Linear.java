@@ -67,9 +67,11 @@ public class BotTeleopPOV_Linear extends LinearOpMode {
     private void linearSlide() {
         if(gamepad1.right_trigger != 0) {
             robot.linearSlide.setPower(gamepad1.right_trigger);
+            telemetry.addData("Say","Lift going up");
         }
         else if(gamepad1.left_trigger != 0) {
             robot.linearSlide.setPower(-gamepad1.left_trigger);
+            telemetry.addData("Say", "Lift going down");
         }
         else {
             robot.linearSlide.setPower(0);
