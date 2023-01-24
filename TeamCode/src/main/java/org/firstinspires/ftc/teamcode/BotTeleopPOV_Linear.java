@@ -60,7 +60,7 @@ public class BotTeleopPOV_Linear extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             drivetrain();
-            intake();
+            //intake();
             linearSlide();
             telemetry.update();
             sleep(50);
@@ -71,7 +71,7 @@ public class BotTeleopPOV_Linear extends LinearOpMode {
         robot.linearSlide.setPower(gamepad1.left_trigger);
     }
 
-    private void intake() {
+    /*private void intake() {
         if(gamepad1.right_trigger >= 1 && isOpen) {
             closeClaw();
         }
@@ -90,7 +90,7 @@ public class BotTeleopPOV_Linear extends LinearOpMode {
         telemetry.addData("Say", "Closing Claw");
         isOpen = false;
         
-    }
+    }*/
 
     private void drivetrain() {
          double y  = -gamepad1.left_stick_y;
