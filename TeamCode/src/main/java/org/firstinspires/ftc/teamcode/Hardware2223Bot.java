@@ -38,11 +38,11 @@ public class Hardware2223Bot
 {
     //It is setting a class for the left,right drive the arm and claw to null
     /* Public OpMode members. */
-    public DcMotor  rearLeftDrive   = null;//sets public class for left drive motor and setting it to null
-    public DcMotor  rearRightDrive  = null;//sets public class for right drive motor and setting the class to null
-    public DcMotor  frontLeftDrive  = null;
-    public DcMotor  frontRightDrive = null;
-    public DcMotor  linearSlide     = null;
+    public DcMotor  rearLeftDrive;//sets public class for left drive motor and setting it to null
+    public DcMotor  rearRightDrive;//sets public class for right drive motor and setting the class to null
+    public DcMotor  frontLeftDrive;
+    public DcMotor  frontRightDrive;
+    public DcMotor  linearSlide;
     //public Servo    clawLeft        = null;
     //public Servo    clawRight       = null;
 
@@ -54,14 +54,6 @@ public class Hardware2223Bot
     //makes public class HardwareBetaBot
     /* Constructor */
     public Hardware2223Bot(){
-
-    }
-    //Starts the HardwareMap/interface
-    /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
-        hwMap = ahwMap;
-
         // Define and Initialize Motors
         rearLeftDrive   = hwMap.get(DcMotor.class, "rear_left_drive");
         rearRightDrive  = hwMap.get(DcMotor.class, "rear_right_drive");
@@ -70,6 +62,14 @@ public class Hardware2223Bot
         linearSlide     = hwMap.get(DcMotor.class, "arm");
         //clawLeft        = hwMap.get(Servo.class, "claw_left");
         //clawRight       = hwMap.get(Servo.class, "claw_right");
+    }
+    //Starts the HardwareMap/interface
+    /* Initialize standard Hardware interfaces */
+    public void init(HardwareMap ahwMap) {
+        // Save reference to Hardware map
+        hwMap = ahwMap;
+
+        // Define motor direction
         rearLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         rearRightDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
